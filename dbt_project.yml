@@ -1,0 +1,50 @@
+name: estabanell_p2d
+version: 1.0.0
+config-version: 2
+require-dbt-version: ">=1.10.0,<2.0.0"
+profile: estabanell
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+snapshot-paths: ["snapshots"]
+docs-paths: ["models"]
+
+# Only these three are valid in dbt 1.10
+quoting:
+  database: false
+  schema: false
+  identifier: false
+
+vars:
+  expected_samples_per_day: 96
+  bands:
+    valle: [0,1,2,3,4,5]
+    llano: [6,7,8,9,10,11,12,13,14,15,16,17]
+    punta: [18,19,20,21]
+    postpunta: [22,23]
+  proportions_sum_bounds:
+    lower: 0.98
+    upper: 1.02
+
+models:
+  estabanell_p2d:
+    sources:
+      +schema: "P2D"
+    dwh:
+      +schema: "DWH"
+      +materialized: table
+      +tags: ["p2d","layer:dwh"]
+    agg:
+      +schema: "AGG"
+      +materialized: table
+      +tags: ["p2d","layer:agg"]
+
+tests:
+  +severity: error
+
+clean-targets:
+  - "target"
+  - "dbt_packages"

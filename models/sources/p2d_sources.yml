@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: p2d
+    database: "{{ target.database }}"   # QH
+    schema: P2D
+    tables:
+      - name: P2D_RAW
+        description: "RAW landing de medidas P2D (sin transformaciones)."
+        columns:
+          - name: CUPS
+          - name: FECHA_MEDIDA
+          - name: TIPO_MEDIDA
+          - name: VERANO
+          - name: MEDIDA_ACTIVA_ENTRANTE
+          - name: CALIDAD_ACTIVA_ENTRANTE
+          - name: MEDIDA_ACTIVA_SALIENTE
+          - name: CALIDAD_ACTIVA_SALIENTE
+          - name: MEDIDA_REACTIVA_CUADRANTE_1
+          - name: CALIDAD_REACTIVA_CUADRANTE_1
+          - name: MEDIDA_REACTIVA_CUADRANTE_2
+          - name: CALIDAD_REACTIVA_CUADRANTE_2
+          - name: MEDIDA_REACTIVA_CUADRANTE_3
+          - name: CALIDAD_REACTIVA_CUADRANTE_3
+          - name: MEDIDA_REACTIVA_CUADRANTE_4
+          - name: CALIDAD_REACTIVA_CUADRANTE_4
+          - name: MEDIDA_RESERVA_1
+          - name: CALIDAD_RESERVA_1
+          - name: MEDIDA_RESERVA_2
+          - name: CALIDAD_RESERVA_2
+          - name: METODO_OBTENCION
+          - name: FIRMEZA

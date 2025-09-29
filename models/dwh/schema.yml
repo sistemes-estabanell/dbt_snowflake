@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: p2d_dwh
+    description: "DWH: estandariza identificadores y añade columnas de tiempo derivadas de FECHA_MEDIDA; sin lógica de negocio."
+    columns:
+      - name: CUPS
+        tests: [not_null]
+      - name: FECHA_MEDIDA
+        tests: [not_null]
+      - name: TIPO_MEDIDA
+        tests: [not_null]
+      - name: FECHA
+        tests: [not_null]

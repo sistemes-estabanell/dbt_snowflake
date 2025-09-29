@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: p2d_agg_diaria_qa
+    description: "Agregado diario con reglas de calidad y completitud."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [CUPS, FECHA]
+    columns:
+      - name: CUPS
+        tests: [not_null]
+      - name: FECHA
+        tests: [not_null]
+      - name: COMPLETITUD_D
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1
+      - name: ACTIVA_NETA_D
+        description: "Entrante - Saliente (diaria)."
+
+  - name: p2d_agg_perfil_horario
+    description: "Perfil horario diario por CUPS, pivot 0..23 y proporciones normalizadas."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [CUPS, FECHA]
+      - sum_props_close_to_one:
+          props: ["P0","P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20","P21","P22","P23"]
+          lower_bound: 0.98
+          upper_bound: 1.02
+    columns:
+      - name: CUPS
+        tests: [not_null]
+      - name: FECHA
+        tests: [not_null]
+
+  - name: p2d_agg_kpis
+    description: "KPIs diarios: activa neta, reactiva, PF, rolling R7/R30 y z-score; dimensiones temporales."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [CUPS, FECHA]
+    columns:
+      - name: CUPS
+        tests: [not_null]
+      - name: FECHA
+        tests: [not_null]
+      - name: PF_D
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1
+              strictly: false

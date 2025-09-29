@@ -1,0 +1,14 @@
+estabanell:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ZTQQZNM-SR64649
+      user: MATEO.RACCA
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: SYSADMIN
+      database: QH
+      warehouse: COMPUTE_WH
+      schema: DWH
+      threads: 8
+      client_session_keep_alive: true
